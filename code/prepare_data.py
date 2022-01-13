@@ -33,15 +33,9 @@ def save_for_ds(path, filewriter):
     vertical_idx = int(vertical[0]) * 6 + int(vertical[-1]) - 1
     print(horizontal, horizontal_idx)
     print(vertical, vertical_idx)
-    # w_file0 = open('csv\\' + path[10:] + '_h', mode="w", encoding='utf-8')
-    # file_writer0 = csv.writer(w_file0, delimiter=",", lineterminator="\r")
-
-    # w_file1 = open('csv\\' + path[10:] + '_v', mode="w", encoding='utf-8')
-    # file_writer1 = csv.writer(w_file1, delimiter=",", lineterminator="\r")
-
+    
     for i in range(12, 33):
-        # print(i)
-        # print(config[i])
+       
         filename0 = path + f'\\img_{i}_0.png'
         filename1 = path + f'\\img_{i}_1.png'
         img0 = open_image(filename0)
@@ -68,13 +62,7 @@ def save_for_ds(path, filewriter):
             else:
                 filewriter.writerow(np.append(img0, 0).flatten())
 
-        # cv.imshow('img0', img0)
-        # cv.imshow('img1', img1)
-        # cv.waitKey()
-
-    # w_file0.close()
-    # w_file1.close()
-
+   
 
 def make_csv():
     w_file = open('csv\\all.csv', mode="w", encoding='utf-8')
@@ -91,13 +79,6 @@ def make_csv():
         save_for_ds(path=pack, filewriter=file_writer)
 
     w_file.close()
-    """
-    all_results = glob.glob(".\\csv\\*")
-    print(glob.glob(".\\csv\\*"))
-
-    combined_csv = pd.concat([pd.read_csv(f) for f in all_results ])
-    #export to csv
-    combined_csv.to_csv( "combined_csv.csv", index=False, encoding='utf-8-sig')"""
 
 
 # save_for_ds(path="results/КО без диафрагмы_Г3-3_В3-3")
@@ -149,23 +130,8 @@ for pack in all_results:
                 # print(res)
                 results.append(int(path[path.rfind('result') + 6:path.rfind('result') + 7]))
 
-    #numpy_vertical_concat = images[0]
-    #for i in range(0, len(images), 2):
-    #    numpy_vertical_concat = np.concatenate((numpy_vertical_concat, images[i]), axis=1)
-    #cv.imshow('numpy_vertical_concat', numpy_vertical_concat)
-    #cv.waitKey()
+  
     pixels = np.asarray(images)
-    """
-    pixels = pixels.astype('float32')
-    mean, std = pixels.mean(), pixels.std()
-    print('Mean: %.3f, Standard Deviation: %.3f' % (mean, std))
-    pixels = (pixels - mean) / std
-    # clip pixel values to [-1,1]
-    pixels = np.clip(pixels, -1.0, 1.0)
-    # shift from [-1,1] to [0,1] with 0.5 mean
-    pixels = (pixels + 1.0) / 2.0
-    mean, std = pixels.mean(), pixels.std()
-    print('Mean: %.3f, Standard Deviation: %.3f' % (mean, std))
-    print('Min: %.3f, Max: %.3f' % (pixels.min(), pixels.max()))"""
+  
     for i, f_img in enumerate(pixels):
         np.savetxt(pack + '\\' + f'img_{i}_{results[i]}.txt', f_img, delimiter=',', fmt='%.10f', encoding='utf-8')
